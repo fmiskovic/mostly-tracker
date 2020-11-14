@@ -45,8 +45,9 @@ public class ProjectEntryServiceTest extends AbstractServiceTest<ProjectEntry, L
         command.setDescription("Description");
         command.setEntryDate(D_DATE.minusDays(3));
         command.setTimeSpent(3.33f);
+        command.setProjectId(project.getId());
 
-        ProjectEntry projectEntry = service.createProjectEntry(project.getId(), command);
+        ProjectEntry projectEntry = service.createProjectEntry(command);
         assertNotNull(projectEntry);
     }
 
@@ -58,8 +59,9 @@ public class ProjectEntryServiceTest extends AbstractServiceTest<ProjectEntry, L
         command.setDescription("Description");
         command.setEntryDate(D_DATE.plusDays(14));
         command.setTimeSpent(3.33f);
+        command.setProjectId(project.getId());
 
-        assertThrows(EntryDateException.class, () -> service.createProjectEntry(project.getId(), command));
+        assertThrows(EntryDateException.class, () -> service.createProjectEntry(command));
     }
 
     @Override

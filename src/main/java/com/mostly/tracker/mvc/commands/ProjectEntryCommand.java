@@ -1,7 +1,7 @@
 package com.mostly.tracker.mvc.commands;
 
-import java.time.LocalDate;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 
 public class ProjectEntryCommand {
 
@@ -12,6 +12,9 @@ public class ProjectEntryCommand {
     private Float timeSpent;
 
     private String description;
+
+    @NotNull
+    private Long projectId;
 
     public LocalDate getEntryDate() {
         return entryDate;
@@ -35,5 +38,13 @@ public class ProjectEntryCommand {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Long getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(Long projectId) {
+        this.projectId = projectId;
     }
 }

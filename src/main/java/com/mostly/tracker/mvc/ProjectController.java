@@ -71,7 +71,7 @@ public class ProjectController {
      * @param pageable - pageable object of type {@link Pageable}
      * @return Paged representation of project entities. Check {@link ProjectDto}.
      */
-    @GetMapping
+    @GetMapping("/search")
     public Page<ProjectDto> search(ProjectSpecification spec, Pageable pageable) {
         return service.search(spec, pageable).map(converter::toDto);
     }
@@ -87,7 +87,7 @@ public class ProjectController {
      * @return Paged representation of project entities. Check {@link ProjectDto}.
      */
     @GetMapping("/page")
-    public Page<ProjectDto> search(Pageable pageable) {
+    public Page<ProjectDto> getPage(Pageable pageable) {
         return service.findPage(pageable).map(converter::toDto);
     }
 

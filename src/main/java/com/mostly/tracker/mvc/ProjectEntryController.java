@@ -54,7 +54,7 @@ public class ProjectEntryController {
      * @param projectId - project entry identifier
      * @return Collection of project entries. Check {@link ProjectEntryDto}.
      */
-    @GetMapping("/{projectId}")
+    @GetMapping("/project/{projectId}")
     public List<ProjectEntryDto> getAllEntriesByProjectId(@PathVariable("projectId") Long projectId) {
         return service.getAllEntriesByProjectId(projectId)
                 .stream().map(converter::toDto).collect(Collectors.toList());
@@ -84,7 +84,7 @@ public class ProjectEntryController {
      * @param pageable - pageable object of type {@link Pageable}
      * @return Dto representation of the project entity. Check {@link ProjectDto}.
      */
-    @GetMapping
+    @GetMapping("/search")
     public Page<ProjectEntryDto> search(ProjectEntrySpecification spec, Pageable pageable) {
         return service.search(spec, pageable).map(converter::toDto);
     }
@@ -95,9 +95,9 @@ public class ProjectEntryController {
      * @param command {@link ProjectEntryCommand} object with entity properties.
      * @return Resource location.
      */
-    @PutMapping("/{projectId}/save")
-    public ResponseEntity<URI> save(@PathVariable("projectId") Long projectId, @RequestBody ProjectEntryCommand command) {
-        ProjectEntry project = service.createProjectEntry(projectId, command);
+    @PutMapping("/save")
+    public ResponseEntity<URI> save(@RequestBody ProjectEntryCommand command) {
+        ProjectEntry project = service.createProjectEntry(command);
         // Create resource location
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")

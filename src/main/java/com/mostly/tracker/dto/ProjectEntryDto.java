@@ -1,5 +1,6 @@
 package com.mostly.tracker.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mostly.tracker.model.Project;
 
 import java.time.LocalDate;
@@ -24,6 +25,7 @@ public class ProjectEntryDto implements IdentifierDto<Long> {
         this.id = id;
     }
 
+    @JsonIgnore
     @Override
     public Long getIdentifier() {
         return id;

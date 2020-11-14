@@ -43,12 +43,13 @@ public class ProjectEntryService extends AbstractService<ProjectEntry, Long> {
         return repository.findAllByProjectId(projectId);
     }
 
-    public ProjectEntry createProjectEntry(Long projectId, ProjectEntryCommand command) {
-        Project project = projectRepository.findById(projectId).orElseThrow(EntityNotFoundException::new);
+    public ProjectEntry createProjectEntry(ProjectEntryCommand command) {
+        Project project = projectRepository.findById(command.getProjectId())
+                .orElseThrow(EntityNotFoundException::new);
         ProjectEntry entry = new ProjectEntry();
         BeanUtils.copyProperties(command, entry);
 
-        validator.validateEntryDate(project, entry); // should throw an error if not valid
+        validator.validateEntryDate(project, entry); // throws an error if entry date is not valid
         entry.setProject(project);
 
         return save(entry);
