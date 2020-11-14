@@ -7,11 +7,11 @@ services:
     container_name: mostly-tracker-db
     hostname: postgres
     ports:
-      - 5433:5433
+      - 5432:5432
     volumes:
       - ./data/postgresql-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=mostly-tracker
+      - POSTGRES_DB=mostlytracker
       - POSTGRES_USER=tracker
       - POSTGRES_PASSWORD=tracker
     networks:

@@ -7,6 +7,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Service
 public class ProjectService extends AbstractService<Project, Long> {
@@ -27,16 +31,25 @@ public class ProjectService extends AbstractService<Project, Long> {
         return repository;
     }
 
+    @Transactional
     public Project createProject(ProjectCommand command) {
+        log.debug("Creating new project {}", command.getName());
         Project project = new Project();
         BeanUtils.copyProperties(command, project);
         return save(project);
     }
 
+    @Transactional
     public Project updateProject(Long projectId, ProjectCommand command) {
+        log.debug("Updating existing project with ID {}", projectId);
         Project project = new Project();
         project.setId(projectId);
         BeanUtils.copyProperties(command, project);
         return save(project);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Long> findProjectIdsByEndDate(LocalDate endDate) {
+        return repository.findProjectIdsByEndDate(endDate);
     }
 }

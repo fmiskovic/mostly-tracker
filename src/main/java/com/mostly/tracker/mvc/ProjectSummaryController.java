@@ -23,6 +23,6 @@ public class ProjectSummaryController {
 
     @GetMapping("/project/{projectId}")
     public ProjectSummaryDto getProjectSummary(@PathVariable("projectId") Long projectId) {
-        return converter.toDto(service.generateSummary(projectId));
+        return converter.toDto(service.getProjectSummaryByProjectId(projectId));
     }
 }

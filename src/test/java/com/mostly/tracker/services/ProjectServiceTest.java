@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -17,7 +18,7 @@ public class ProjectServiceTest extends AbstractServiceTest<Project, Long> {
     private ProjectService service;
 
     @Test
-    public void testCreateProject() {
+    public void testCreateAndUpdateProject() {
         ProjectCommand command = new ProjectCommand();
         command.setName(NAME);
         command.setStartDate(LocalDate.MIN.plusDays(10));
@@ -31,6 +32,30 @@ public class ProjectServiceTest extends AbstractServiceTest<Project, Long> {
         assertEquals(command.getEndDate(), newProject.getEndDate());
 
         assertTrue(service.findById(newProject.getId()).isPresent());
+
+        String theOtherName = "The other name";
+        command.setName(theOtherName);
+        command.setEndDate(LocalDate.now());
+
+        Project updatedProject = service.updateProject(newProject.getId(), command);
+        assertEquals(theOtherName, updatedProject.getName());
+        assertEquals(command.getEndDate(), updatedProject.getEndDate());
+
+    }
+
+    @Test
+    public void testFindProjectsByEndDate(){
+        ProjectCommand command = new ProjectCommand();
+        command.setName(NAME);
+        command.setStartDate(LocalDate.MIN.plusDays(10));
+        command.setEndDate(D_DATE);
+
+        Project newProject = service.createProject(command);
+        assertNotNull(newProject);
+
+        List<Long> projectIds = service.findProjectIdsByEndDate(D_DATE);
+        assertEquals(1, projectIds.size());
+        assertEquals(newProject.getId(), projectIds.get(0));
     }
 
     @Override

@@ -44,6 +44,7 @@ public class ProjectEntryService extends AbstractService<ProjectEntry, Long> {
     }
 
     public ProjectEntry createProjectEntry(ProjectEntryCommand command) {
+        log.debug("Creating new project entry for project with ID {}", command.getProjectId());
         Project project = projectRepository.findById(command.getProjectId())
                 .orElseThrow(EntityNotFoundException::new);
         ProjectEntry entry = new ProjectEntry();
