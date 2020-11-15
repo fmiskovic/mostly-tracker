@@ -24,7 +24,6 @@ public class ProjectEntityConverterTest extends AbstractConverterTest<ProjectEnt
         dto.setEntryDate(LocalDate.now());
         dto.setTimeSpent(2.33f);
         dto.setDescription("Nicely put description.");
-        dto.setProject(new Project());
         return dto;
     }
 

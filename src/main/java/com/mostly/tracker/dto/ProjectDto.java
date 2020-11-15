@@ -1,10 +1,8 @@
 package com.mostly.tracker.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mostly.tracker.model.ProjectEntry;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class ProjectDto implements IdentifierDto<Long> {
 
@@ -15,8 +13,6 @@ public class ProjectDto implements IdentifierDto<Long> {
     private LocalDate startDate;
 
     private LocalDate endDate;
-
-    private List<ProjectEntry> entries;
 
     public Long getId() {
         return id;
@@ -54,13 +50,5 @@ public class ProjectDto implements IdentifierDto<Long> {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-    }
-
-    public List<ProjectEntry> getEntries() {
-        return entries;
-    }
-
-    public void setEntries(List<ProjectEntry> entries) {
-        this.entries = entries;
     }
 }

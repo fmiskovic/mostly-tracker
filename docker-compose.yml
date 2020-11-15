@@ -2,26 +2,11 @@ version: "3"
 
 services:
 
-  postgres:
-    image: postgres:11
-    container_name: mostly-tracker-db
-    hostname: postgres
-    ports:
-      - 5432:5432
-    volumes:
-      - ./data/postgresql-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=mostlytracker
-      - POSTGRES_USER=tracker
-      - POSTGRES_PASSWORD=tracker
-    networks:
-      - mostly-tracker
-
-  tracker:
+  mostly-tracker-app:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: tracker
+    container_name: mostly-tracker-app
     ports:
       - 8080:8080
     networks:
@@ -32,9 +17,26 @@ services:
       - SPRING_DATASOURCE_PASSWORD=tracker
     depends_on:
       - postgres
+    restart: always
+
+  postgres:
+    image: postgres:11
+    container_name: mostly-tracker-db
+    hostname: postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=mostlytracker
+      - POSTGRES_USER=tracker
+      - POSTGRES_PASSWORD=tracker
+    networks:
+      - mostly-tracker
+    restart: always
 
 volumes:
-  mostly:
+  pgdata:
 
 networks:
   mostly-tracker:

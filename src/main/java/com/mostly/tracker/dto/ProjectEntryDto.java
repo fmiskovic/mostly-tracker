@@ -1,7 +1,6 @@
 package com.mostly.tracker.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mostly.tracker.model.Project;
 
 import java.time.LocalDate;
 
@@ -14,8 +13,6 @@ public class ProjectEntryDto implements IdentifierDto<Long> {
     private Float timeSpent;
 
     private String description;
-
-    private Project project;
 
     public Long getId() {
         return id;
@@ -53,13 +50,5 @@ public class ProjectEntryDto implements IdentifierDto<Long> {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
     }
 }
