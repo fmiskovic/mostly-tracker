@@ -53,7 +53,7 @@ public class ProjectSummaryServiceTest extends AbstractServiceTest<ProjectSummar
     @Test
     public void testGenerateSummary() {
         // prepare
-        long totalDays = 3;
+        long totalDays = 2;
         float timeSpent1 = 2.55f;
         float timeSpent2 = 6.44f;
         float timeSpent3 = 3.37f;
@@ -68,7 +68,7 @@ public class ProjectSummaryServiceTest extends AbstractServiceTest<ProjectSummar
         summary = service.save(summary);
         //verify
         assertNotNull(summary);
-        assertEquals(3, summary.getTotalDays());
+        assertEquals(totalDays, summary.getTotalDays());
         assertEquals(sum, summary.getTotalTimeSpent());
         assertEquals(avg, summary.getAverageTimeSpentPerDay());
     }

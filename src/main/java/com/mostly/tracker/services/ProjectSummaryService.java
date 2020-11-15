@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectSummaryService extends AbstractService<ProjectSummary, Long> {
@@ -47,11 +50,15 @@ public class ProjectSummaryService extends AbstractService<ProjectSummary, Long>
 
         List<ProjectEntry> entries = entryRepository.findAllByProjectId(projectId);
 
-        // calculations below
-        long totalDays = entries.size();
+        // calculate totalDays as number of unique entryDates
+        long totalDays = entries.parallelStream()
+                .map(ProjectEntry::getEntryDate)
+                .collect(Collectors.toSet()).size();
+        // calculate totalTimeSpent as a sum of timeSpent
         double totalTimeSpent = totalDays > 0 ?
                 entries.parallelStream().mapToDouble(ProjectEntry::getTimeSpent).sum()
                 : 0.0f;
+        // calculate averageTimeSpentPerDay as a division of totalTimeSpent and totalDays
         float averageTimeSpentPerDay = totalDays > 0 ? (float) (totalTimeSpent / totalDays) : 0.0f;
 
         ProjectSummary summary = new ProjectSummary();
