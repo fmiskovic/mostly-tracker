@@ -1,7 +1,10 @@
 package com.mostly.tracker.schedulers;
 
+import com.mostly.tracker.model.ProjectSummary;
 import com.mostly.tracker.services.ProjectService;
 import com.mostly.tracker.services.ProjectSummaryService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,8 @@ import java.util.List;
 @Component
 public class SummaryGenerator {
 
+    private final Logger log = LoggerFactory.getLogger(getClass());
+
     private final ProjectService projectService;
 
     private final ProjectSummaryService summaryService;
@@ -27,10 +32,14 @@ public class SummaryGenerator {
     }
 
     @Async
-    @Scheduled(cron = "0 0 1 * * *") // every day at 1am
+    @Scheduled(cron = "${mostly.tracker.schedule}") // every day at 1am
     public void generateSummary() {
+        log.debug("Checking for ended projects to generate summaries...");
         LocalDate today = LocalDate.now();
         List<Long> projectIds = projectService.findProjectIdsByEndDate(today);
-        projectIds.forEach(summaryService::generateSummary);
+        projectIds.forEach(id -> {
+            ProjectSummary summary = summaryService.generateSummary(id);
+            summaryService.save(summary);
+        });
     }
 }

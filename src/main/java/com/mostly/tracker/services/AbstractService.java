@@ -24,7 +24,7 @@ public abstract class AbstractService<E extends Identifier<ID>, ID extends Seria
     @Transactional
     @Override
     public E save(E entity) {
-        log.debug("Saving new {} entity", entity.getClass());
+        log.debug("Saving new entity");
         return getRepository().save(entity);
     }
 

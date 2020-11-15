@@ -32,12 +32,14 @@ public class ProjectSummaryService extends AbstractService<ProjectSummary, Long>
 
     @Transactional
     public ProjectSummary getProjectSummaryByProjectId(Long projectId) {
+        log.debug("Get existing or generate new summary for project with ID {}", projectId);
         Optional<ProjectSummary> optSum = summaryRepository.findProjectSummaryByProjectId(projectId);
         return optSum.orElse(generateSummary(projectId));
     }
 
     @Transactional
     public ProjectSummary generateSummary(Long projectId) {
+        log.debug("Generate new summary for project with ID {}", projectId);
         // verify project id
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() ->

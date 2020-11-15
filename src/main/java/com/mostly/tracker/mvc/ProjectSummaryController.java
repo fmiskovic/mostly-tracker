@@ -21,6 +21,12 @@ public class ProjectSummaryController {
         this.converter = converter;
     }
 
+    /**
+     * Get summary for specified project.
+     *
+     * @param projectId - project identifier
+     * @return summary - totalTimeSpent, averageTimeSpentPerDay, totalDays
+     */
     @GetMapping("/project/{projectId}")
     public ProjectSummaryDto getProjectSummary(@PathVariable("projectId") Long projectId) {
         return converter.toDto(service.getProjectSummaryByProjectId(projectId));

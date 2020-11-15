@@ -65,6 +65,7 @@ public class ProjectSummaryServiceTest extends AbstractServiceTest<ProjectSummar
         createProjectEntry(timeSpent3, LocalDate.now().minusDays(4), project);
         // execute
         ProjectSummary summary = service.generateSummary(project.getId());
+        summary = service.save(summary);
         //verify
         assertNotNull(summary);
         assertEquals(3, summary.getTotalDays());

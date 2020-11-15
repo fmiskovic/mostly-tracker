@@ -24,13 +24,17 @@ services:
     container_name: tracker
     ports:
       - 8080:8080
-    network_mode: mostly-tracker
+    networks:
+      - mostly-tracker
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/mostlytracker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://mostly-tracker-db:5432/mostlytracker
       - SPRING_DATASOURCE_USERNAME=tracker
       - SPRING_DATASOURCE_PASSWORD=tracker
     depends_on:
       - postgres
+
+volumes:
+  mostly:
 
 networks:
   mostly-tracker:
