@@ -6,7 +6,7 @@
 ### Run project
 `docker-compose up --build`
 
-On startup, couple of projects and entries will be insert into the db.
+On the startup, couple of projects and entries will be insert into the db.
 
 ### API
 
