@@ -2,17 +2,17 @@ version: "3"
 
 services:
 
-  mostly-tracker-app:
+  time-tracker-app:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: mostly-tracker-app
+    container_name: time-tracker-app
     ports:
       - 8080:8080
     networks:
-      - mostly-tracker
+      - time-tracker
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://mostly-tracker-db:5432/mostlytracker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://time-tracker-db:5432/timetracker
       - SPRING_DATASOURCE_USERNAME=tracker
       - SPRING_DATASOURCE_PASSWORD=tracker
     depends_on:
@@ -21,22 +21,22 @@ services:
 
   postgres:
     image: postgres:11
-    container_name: mostly-tracker-db
+    container_name: time-tracker-db
     hostname: postgres
     ports:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=mostlytracker
+      - POSTGRES_DB=timetracker
       - POSTGRES_USER=tracker
       - POSTGRES_PASSWORD=tracker
     networks:
-      - mostly-tracker
+      - time-tracker
     restart: always
 
 volumes:
   pgdata:
 
 networks:
-  mostly-tracker:
+  time-tracker:

@@ -33,7 +33,7 @@ public class SummaryGenerator {
     }
 
     @Async
-    @Scheduled(cron = "${mostly.tracker.schedule}") // every day at 1am
+    @Scheduled(cron = "${time.tracker.schedule}") // every day at 1am
     public void generateSummary() {
         log.debug("Checking for ended projects to generate summaries...");
         LocalDate today = LocalDate.now();
